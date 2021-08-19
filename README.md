@@ -1,12 +1,12 @@
+# DevOps Engineer Test App
 
-How to run
+### How to run
 
 ```
-gradle microBundle
 docker-compose up --build
 ```
 
-Then access
+### Access in your browser:
 
 
 HealthAPI
