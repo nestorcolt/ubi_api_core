@@ -22,6 +22,9 @@ jobs:
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
 
+      - name: Check running containers
+        run: docker ps
+
       - name: Run tests
         run: echo "running test..."
 
