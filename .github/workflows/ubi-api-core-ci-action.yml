@@ -14,6 +14,8 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
           image: nestorcolt/ubi-api-core
+          tags: v1, latest
+          dockerfile: ./Dockerfile
           registry: docker.io
           username: ${{ secrets.DEV_DOCKER_ACCOUNT_ID }}
           password: ${{ secrets.DEV_DOCKER_ACCOUNT_PASSWORD }}
