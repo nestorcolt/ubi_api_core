@@ -6,7 +6,7 @@ services:
     image: mariadb:latest
     volumes:
       - "./.mysql-data/db:/var/lib/mysql"
-    restart: always
+    restart: unless-stopped
     ports:
       - "3306:3306"
     environment:
