@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Build and Push Docker Image
       - uses: mr-smithers-excellent/docker-build-push@v4
-          with:
-            image: nestorcolt/ubi-api-core
-            registry: docker.io
-            username: ${{ secrets.DEV_DOCKER_ACCOUNT_ID }}
-            password: ${{ secrets.DEV_DOCKER_ACCOUNT_PASSWORD }}
+        with:
+          image: nestorcolt/ubi-api-core
+          registry: docker.io
+          username: ${{ secrets.DEV_DOCKER_ACCOUNT_ID }}
+          password: ${{ secrets.DEV_DOCKER_ACCOUNT_PASSWORD }}
