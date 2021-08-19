@@ -14,6 +14,10 @@ RUN gradle microbundle
 # 2 - Spin the the app container 
 FROM openjdk:11.0.9-jre-slim-buster
 
+LABEL maintainer="Nestor Colt" \
+      name="ubi_api_core" \
+      version="latest"
+
 ENV APP_HOME=/home/gradle/api_root
 WORKDIR /app
 COPY --from=builder ${APP_HOME}/build/libs/ROOT-microbundle.jar /app

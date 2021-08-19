@@ -3,21 +3,38 @@ name: Docker CI pipeline for ubi-api-core
 on:
   push:
     branches: [ master ]
+    # only build when important files change
+    paths-ignore:
+      - 'README.md'
+      - ".gitignore"
   schedule:
     - cron: '0 0 * * *'
 
 jobs:
   build-docker:
+
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build and Push Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
-          image: nestorcolt/ubi-api-core
-          tags: v1.0, latest
-          registry: docker.io
           username: ${{ secrets.DEV_DOCKER_ACCOUNT_ID }}
           password: ${{ secrets.DEV_DOCKER_ACCOUNT_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: nestorcolt/ubi-api-core:latest
+
