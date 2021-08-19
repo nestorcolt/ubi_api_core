@@ -19,8 +19,6 @@ dependencies {
     providedCompile 'javax:javaee-web-api:8.0'
     implementation 'org.eclipse.microprofile:microprofile:3.3'
 
-    testImplementation  'junit:junit:4.12'
-    
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
@@ -44,8 +42,12 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
 }
 
+test {
+    useJUnitPlatform()
+}
 
 war {
     manifest {
