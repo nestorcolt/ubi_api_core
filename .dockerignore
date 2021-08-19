@@ -1,0 +1,16 @@
+Dockerfile
+.DS_Store
+env.*
+
+#Ignoring git and cache folders
+.git
+.gitignore
+.cache
+
+# To prevent storing dev/temporary container data
+*.csv
+tmp
+
+#Ignoring all the markdown and class files
+*.md
+**/*.class
