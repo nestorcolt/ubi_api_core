@@ -8,7 +8,7 @@ services:
       - "./.mysql-data/db:/var/lib/mysql"
     restart: always
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=api
       - MYSQL_DATABASE=apiDB
@@ -18,7 +18,7 @@ services:
   frontend:
     image: swaggerapi/swagger-ui
     ports:
-      - 3000:8080
+      - "3000:8080"
     environment:
       - URL=http://localhost:8080/openapi
     depends_on:
@@ -30,6 +30,6 @@ services:
       dockerfile: Dockerfile
     image: api-gradle
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
       - DB=crm_db
