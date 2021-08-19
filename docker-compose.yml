@@ -33,5 +33,3 @@ services:
       - 8080:8080
     environment:
       - DB=crm_db
-    links:
-      - crm_db
