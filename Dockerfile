@@ -1,4 +1,4 @@
-# temporal container to build using gradle 7.2
+# 1 - Container to build the app using gradle 7.2
 FROM gradle:jdk11-hotspot as builder
 
 ENV APP_HOME=/home/gradle/api_root
@@ -11,8 +11,28 @@ COPY build.gradle settings.gradle gradle.properties ${APP_HOME}/
 
 RUN gradle microbundle
 
-# Spins the second container for running the java app on port 8080
-FROM openjdk:11-jre-slim-buster as javacontainer
+# 2- Container to create a minimal JRE package
+FROM alpine:latest as packager
+
+RUN apk --no-cache add openjdk11-jdk openjdk11-jmods
+ENV JAVA_MINIMAL="/opt/java-minimal"
+
+# build minimal JRE with only necesary dependencies
+RUN /usr/lib/jvm/java-11-openjdk/bin/jlink \
+    --verbose \
+    --add-modules \
+        java.base,java.sql,java.naming,java.desktop,java.management,java.security.jgss,java.instrument \
+    --compress 2 --strip-debug --no-header-files --no-man-pages \
+    --release-info="add:IMPLEMENTOR=radistao:IMPLEMENTOR_VERSION=radistao_JRE" \
+    --output "$JAVA_MINIMAL"
+
+# 3 - Spin the the app container with the packaged light weight JRE
+FROM alpine:latest
+
+# Set up the java home environment variables using the JRE from the previous packager container
+ENV JAVA_HOME=/opt/java-minimal
+ENV PATH="$PATH:$JAVA_HOME/bin"
+COPY --from=packager "$JAVA_HOME" "$JAVA_HOME"
 
 ENV APP_HOME=/home/gradle/api_root
 WORKDIR /app
