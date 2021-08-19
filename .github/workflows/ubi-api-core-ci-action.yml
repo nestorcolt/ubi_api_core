@@ -1,20 +1,19 @@
 name: Docker CI pipeline for ubi-api-core
 
 on:
-    push:
-    branches: [ master ]
-        schedule:
-            -   cron: '0 0 * * *'
+  push:
+  branches: [ master ]
+    schedule:
+      - cron: '0 0 * * *'
 
 jobs:
-
-    build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-        -   uses: actions/checkout@v2
-        -   name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ubi-api-core:$(date +%s)
-
-
+  build:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Build and Push Docker Image
+    - uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: nestorcolt/ubi-api-core
+          registry: docker.io
+          username: ${{ secrets.DEV_DOCKER_ACCOUNT_ID }}
+          password: ${{ secrets.DEV_DOCKER_ACCOUNT_PASSWORD }}
