@@ -5,7 +5,10 @@ ENV APP_HOME=/home/gradle/api_root
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
-COPY src/ build.gradle settings.gradle gradle.properties ${APP_HOME}/
+RUN mkdir src 
+COPY src ${APP_HOME}/src
+COPY build.gradle settings.gradle gradle.properties ${APP_HOME}/
+
 RUN gradle microbundle
 
 # Spins the second container for running the java app on port 8080
