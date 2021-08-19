@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  build:
+  build-docker:
     runs-on: ubuntu-latest
     steps:
       - name: Build and Push Docker Image
