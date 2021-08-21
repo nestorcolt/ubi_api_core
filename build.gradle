@@ -1,6 +1,7 @@
 plugins {
     id 'war'
     id "fish.payara.micro-gradle-plugin" version "1.0.4"
+    id 'java'
 }
 
 group "com.ubi.hotel.apiGradle2"
@@ -21,6 +22,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    testImplementation  'junit:junit:4.12'
 
     // jpa
     implementation 'org.eclipse.persistence:eclipselink:2.7.4'
@@ -42,11 +44,16 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
-    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testImplementation'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testImplementation'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 }
 
 test {
     useJUnitPlatform()
+    testLogging.showStandardStreams(true)
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
 
 war {
