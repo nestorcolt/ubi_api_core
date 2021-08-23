@@ -44,10 +44,12 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
-    testImplementation'org.junit.jupiter:junit-jupiter-api:5.7.2'
-    testImplementation'org.junit.jupiter:junit-jupiter-engine:5.7.2'
-    testImplementation 'org.mockito:mockito-junit-jupiter:3.11.2'
-    testImplementation 'org.glassfish.jersey.core:jersey-common:2.22.2'
+
+    implementation 'org.jboss.arquillian.junit5:arquillian-junit5-container:1.7.0.Alpha10'
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    implementation 'org.jboss.arquillian.protocol:arquillian-protocol-servlet-jakarta:1.7.0.Alpha10'
+    implementation 'org.jboss.arquillian.container:arquillian-weld-embedded:3.0.0.Alpha2'
+    implementation 'org.jboss.weld:weld-core-impl:4.0.2.Final'
 }
 
 test {
