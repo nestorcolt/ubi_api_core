@@ -13,7 +13,7 @@ repositories {
 
 payaraMicro {
     deployWar = true
-    javaCommandLineOptions = [Ddb: 'localhost', ea:true]
+    javaCommandLineOptions = [Ddb: 'localhost', ea: true]
 }
 
 dependencies {
@@ -26,31 +26,28 @@ dependencies {
     // jpa
     implementation 'org.eclipse.persistence:eclipselink:2.7.4'
     implementation 'javax.persistence:javax.persistence-api:2.2'
-        
+
     // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.6'
-      
+
     // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
     implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.3'
 
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
     implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.1'
- 
+
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
     // For unit test suite
     implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-    implementation 'org.mockito:mockito-junit-jupiter:3.11.2'
-    implementation 'org.glassfish.jersey.core:jersey-common:2.22.2'
-
-    implementation 'org.springframework:spring-context:5.2.16.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter:2.5.3'
-    implementation 'org.springframework.boot:spring-boot-starter-test:2.5.3'
-
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.3'
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2:2.5.3'
+    implementation 'org.jboss.arquillian.junit5:arquillian-junit5-container:1.7.0.Alpha10'
+    implementation 'org.glassfish.jersey.core:jersey-client:2.34'
+    implementation 'org.jboss.arquillian.container:arquillian-weld-ee-embedded-1.1:1.0.0.Final'
+    implementation 'org.jboss.weld:weld-core:2.4.8.Final'
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha4'
 }
+
 
 test {
     useJUnitPlatform()
@@ -64,11 +61,11 @@ war {
     manifest {
         attributes(
                 "Manifest-Version": "1.0",
-                'Created-By'     : "Gradle ${gradle.gradleVersion}",
-                'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
-                'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
-                'Built-By'       : System.properties['user.name'],
-                'Built-Date'     : LocalDateTime.now()
+                'Created-By': "Gradle ${gradle.gradleVersion}",
+                'Build-Jdk': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                'Build-OS': "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
+                'Built-By': System.properties['user.name'],
+                'Built-Date': LocalDateTime.now()
         )
     }
 

@@ -1,61 +1,58 @@
 package com.ubisoft.hotel.profileapi.repository;
 
+import com.ubisoft.hotel.profileapi.JAXRSConfiguration;
 import com.ubisoft.hotel.profileapi.controllers.ProfileController;
 import com.ubisoft.hotel.profileapi.vo.Profile;
-import org.junit.jupiter.api.Assertions;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.*;
-
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
-import java.util.List;
+import java.net.URL;
 
 
-@SpringBootApplication
+@ExtendWith(ArquillianExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProfileControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
+    @Inject
+    ProfileController profileController;
 
-    @InjectMocks
-    private ProfileController profileController;
+    private final Client client = ClientBuilder.newClient();
 
-    @Mock
-    private ProfileRepository profileRepository;
+    @Deployment
+    public static WebArchive createDeployment() {
+        WebArchive war = ShrinkWrap.create(WebArchive.class)
+                .addClass(ProfileController.class)
+                .addClass(Logger.class)
+                .addClass(ProfileRepository.class)
+                .addClass(Profile.class)
+                .addAsResource("META-INF/persistence.xml");
 
-    @Mock
-    private Logger log;
+        System.out.println(war.toString(true));
+        return war;
+    }
 
     @Test
-    public void testFindAll() throws URISyntaxException {
-        // Arrange
-        Profile employee1 = new Profile();
-        long idMock1 = 1;
-        employee1.setId(idMock1);
+    public void testFindAll() {
+        System.out.println("test executed");
+        // Test your REST service
+//        WebTarget target = client.target(deploymentUrl.toURI()).path("/profile");
 
-        Profile employee2 = new Profile();
-        long idMock2 = 2;
-        employee2.setId(idMock2);
-
-//        profileController.createProfile(employee1);
-//        profileController.createProfile(employee2);
-
-//        List<Profile> profiles = profileRepository.findAll();
-//        when(profileController.getAllProfiles()).thenReturn(profiles);
-//
-//        // Assert
-//        Assertions.assertEquals(2, profiles.size());
     }
 }
+
