@@ -17,7 +17,7 @@ payaraMicro {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.13.1'
+//    testImplementation 'junit:junit:4.13.1'
     providedCompile 'javax:javaee-web-api:8.0'
     implementation 'org.eclipse.microprofile:microprofile:3.3'
 
@@ -45,7 +45,15 @@ dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
     implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    implementation 'org.mockito:mockito-junit-jupiter:3.11.2'
+    implementation 'org.glassfish.jersey.core:jersey-common:2.22.2'
 
+    implementation 'org.springframework:spring-test:5.2.16.RELEASE'
+    implementation 'org.springframework:spring-core:5.2.16.RELEASE'
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha4'
+    implementation 'org.springframework:spring-context:5.2.16.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter:2.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-test:2.5.3'
 }
 
 test {
