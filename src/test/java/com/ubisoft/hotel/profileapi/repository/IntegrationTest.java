@@ -8,7 +8,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.io.File;
 
 @Testcontainers
-public class ProfileControllerTest {
+public class IntegrationTest {
 
     @ClassRule
     public static DockerComposeContainer container =
