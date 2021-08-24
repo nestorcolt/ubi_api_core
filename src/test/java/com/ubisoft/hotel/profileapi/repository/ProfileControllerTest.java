@@ -1,58 +1,40 @@
 package com.ubisoft.hotel.profileapi.repository;
 
-import com.ubisoft.hotel.profileapi.JAXRSConfiguration;
-import com.ubisoft.hotel.profileapi.controllers.ProfileController;
-import com.ubisoft.hotel.profileapi.vo.Profile;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.junit5.ArquillianExtension;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
+import org.junit.ClassRule;
+import org.junit.jupiter.api.*;
+import org.testcontainers.containers.*;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.File;
 
-
-@ExtendWith(ArquillianExtension.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Testcontainers
 public class ProfileControllerTest {
 
-    @Inject
-    ProfileController profileController;
+    @ClassRule
+    public static DockerComposeContainer container =
+            new DockerComposeContainer(new File("docker-compose.yml"))
+                    .withExposedService("crm_db", 3306)
+                    .withExposedService("api-gradle", 8080)
+                    .withLocalCompose(true);
 
-    private final Client client = ClientBuilder.newClient();
-
-    @Deployment
-    public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class)
-                .addClass(ProfileController.class)
-                .addClass(Logger.class)
-                .addClass(ProfileRepository.class)
-                .addClass(Profile.class)
-                .addAsResource("META-INF/persistence.xml");
-
-        System.out.println(war.toString(true));
-        return war;
+    @BeforeAll
+    public static void initContainers() {
+        container.start();
     }
 
     @Test
-    public void testFindAll() {
-        System.out.println("test executed");
-        // Test your REST service
-//        WebTarget target = client.target(deploymentUrl.toURI()).path("/profile");
+    @DisplayName("ITest - Should validate connection on localhost")
+    public void assert_connection_to_localhost() {
 
+        String host = container.getServiceHost("crm_db", 3306);
+        String host2 = container.getServiceHost("api-gradle", 8080);
+
+        Assertions.assertEquals(host, "localhost");
+        Assertions.assertEquals(host2, "localhost");
     }
+
 }
+
+
+
 

@@ -39,12 +39,16 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
+
     // For unit test suite
-    implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-    implementation 'org.jboss.arquillian.junit5:arquillian-junit5-container:1.7.0.Alpha10'
-    implementation 'org.glassfish.jersey.core:jersey-client:2.34'
-    implementation 'org.jboss.arquillian.container:arquillian-weld-ee-embedded-1.1:1.0.0.Final'
-    implementation 'org.jboss.weld:weld-core:2.4.8.Final'
+    def junitJupiterVersion = '5.4.2'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    testImplementation "org.testcontainers:testcontainers:1.16.0"
+    testImplementation "org.testcontainers:junit-jupiter:1.16.0"
+    testImplementation "org.testcontainers:mariadb:1.16.0"
+
     implementation 'org.slf4j:slf4j-simple:2.0.0-alpha4'
 }
 
