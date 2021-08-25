@@ -31,7 +31,6 @@ public class IntegrationTest {
 
         Assertions.assertEquals(host, "localhost");
         Assertions.assertEquals(host2, "localhost");
-        Assertions.assertEquals(host2, "0");
     }
 
 }
