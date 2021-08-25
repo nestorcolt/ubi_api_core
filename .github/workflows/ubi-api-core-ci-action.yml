@@ -25,14 +25,12 @@ jobs:
         outputs:
           integration_test_result:
             description: "Set the last process exit value"
-            value: ${{ steps.identify.outputs.integration_test_result }}
+            value: ${{ steps.integration-test.outputs.integration_test_result }}
 
         run: >
           sh deploy.sh -t true
           export TEST_RESULT=$?
           echo "::set-output name=integration_test_result::${TEST_RESULT}"
-
-
 
   build-docker:
     # —— Setup Docker Environment 🐋 —————————————————————————————————————————————
@@ -43,7 +41,7 @@ jobs:
       # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
       - name: Cancel if test failed
         # If the test failed will execute this job otherwise will cancel it
-        if: "${{ needs.first-job.outputs.git_pr_sha == 1' }}"
+        if: ${{ needs.integration-test.outputs.git_pr_sha == 1' }}
         uses: andymckay/cancel-action@0.2
 
       - name: Checkout
