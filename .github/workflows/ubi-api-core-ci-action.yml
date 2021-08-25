@@ -33,28 +33,22 @@ jobs:
   build-docker:
     # —— Setup Docker Environment 🐋 —————————————————————————————————————————————
     needs: integration-test
-    if: ${{ needs.integration-test.outputs.git_pr_sha == 1 }}
+    if: ${{ needs.integration-test.outputs.git_pr_sha == 0 }}
     runs-on: ubuntu-latest
 
     steps:
-      # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
-      - name: Cancel if test failed
-        # If the test failed will execute this job otherwise will cancel it
-        uses: andymckay/cancel-action@0.2
+      - name: Checkout
+        uses: actions/checkout@v2
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DEV_DOCKER_ACCOUNT_ID }}
+          password: ${{ secrets.DEV_DOCKER_ACCOUNT_PASSWORD }}
 
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
-#      - name: Login to DockerHub
-#        uses: docker/login-action@v1
-#        with:
-#          username: ${{ secrets.DEV_DOCKER_ACCOUNT_ID }}
-#          password: ${{ secrets.DEV_DOCKER_ACCOUNT_PASSWORD }}
-#
-#      - name: Build and push Docker image created with the Dockerfile
-#        id: docker_build
-#        uses: docker/build-push-action@v2
-#        with:
-#          push: true
-#          tags: nestorcolt/ubi-api-core:latest
+      - name: Build and push Docker image created with the Dockerfile
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: nestorcolt/ubi-api-core:latest
