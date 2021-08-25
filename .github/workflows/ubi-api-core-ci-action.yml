@@ -26,7 +26,7 @@ jobs:
       # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
       - name: Run Integration Test
         run: >
-          sh deploy.sh -n
+          sh deploy.sh -t true -o true
           export TEST_RESULT=$?
           echo "::set-output name=integration_test_result::${TEST_RESULT}"
 

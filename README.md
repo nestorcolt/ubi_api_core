@@ -55,6 +55,7 @@ Parameters not required:
 -n, -no_dependencies >> Compile and run only the api rest service (JAR).
 -t, -test            >> Run the integration tests.
 -f, -force           >> Force the deployment after the integration test falied.
+-o, -only            >> Only in conjuntion with -test will run ONLY the test suite.
 ```
 
 ### Local development:

@@ -32,14 +32,16 @@ no_dependencies=false
 detached=false
 force=false
 test=false
+only=false
 
-while getopts d:t:n:f: flag; do
+while getopts d:t:n:f:o: flag; do
   # shellcheck disable=SC2220
   case "${flag}" in
   d) detached=${OPTARG} ;;
   t) test=${OPTARG} ;;
   n) no_dependencies=${OPTARG} ;;
   f) force=${OPTARG} ;;
+  o) only=${OPTARG} ;;
   esac
 done
 
@@ -55,9 +57,15 @@ if [ ${test} = true ]; then
   fi
 
   echo "Running app integration test ..."
+
 else
   # The test was not run
   should_continue_exec=true
+fi
+
+# ONLY test suite will be run
+if [ ${only} = true ]; then
+    exit
 fi
 
 # Handle if any argument was sent on the deploy.sh invocation to ignore the test but avoid a "fake test failure"
