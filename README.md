@@ -81,5 +81,5 @@ http://localhost:3000/?url=http://localhost:8080/openapi
 ### Deployed image on DockerHub:
 
 ```
-https://hub.docker.com/repository/docker/nestorcolt/ubi-api-core/general
+https://hub.docker.com/r/nestorcolt/ubi-api-core
 ```
