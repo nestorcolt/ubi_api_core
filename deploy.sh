@@ -63,21 +63,21 @@ else
   should_continue_exec=true
 fi
 
-# ONLY test suite will be run
-if [ ${only} = true ]; then
-    exit
-fi
-
 # Handle if any argument was sent on the deploy.sh invocation to ignore the test but avoid a "fake test failure"
 if [ ${should_continue_exec} = false ]; then
   if [ ${test_result} = false ] && [ ${force} = false ]; then
     echo "Integration test failed catastrophically. Build & deployment canceled."
-    exit 0
+    exit 1
   fi
 fi
 
 # Clean up after test using the utp ports
 clean_up_before_continue
+
+# ONLY test suite will be run
+if [ ${only} = true ]; then
+    exit 0
+fi
 
 # Launch command with no dependencies (only JAR file will be run in docker container)
 if [ ${no_dependencies} = true ]; then
