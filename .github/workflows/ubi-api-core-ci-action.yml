@@ -43,7 +43,7 @@ jobs:
       # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
       - name: Cancel if test failed
         # If the test failed will execute this job otherwise will cancel it
-        if: ${{ needs.first-job.outputs.git_pr_sha == 1' }}
+        if: "${{ needs.first-job.outputs.git_pr_sha == 1' }}"
         uses: andymckay/cancel-action@0.2
 
       - name: Checkout
