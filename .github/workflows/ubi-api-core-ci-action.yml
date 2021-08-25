@@ -11,26 +11,41 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  build-docker:
 
+  integration-test:
+    # —— Tests ✅ ———————————————————————————————————————————————————————————
     runs-on: ubuntu-latest
 
     steps:
+      # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d --build
+      - name: Run Integration Test
+        run: |
+          sh deploy.sh -t true
+          export TEST_RESULT=$?
+          echo "::set-output name=integration_test_result::${TEST_RESULT}"
 
-      - name: Check running containers
-        run: docker ps -a
+      outputs:
+        integration_test_result: ${{ steps.identify.outputs.integration_test_result }}
 
-      - name: Run tests
-        run: echo "running test..."
+  build-docker:
+    # —— Setup Docker Environment 🐋 —————————————————————————————————————————————
+    needs: integration-test
+    runs-on: ubuntu-latest
 
-      - name: Stop containers
-        if: always()
-        run: docker-compose -f "docker-compose.yml" down
+    steps:
+      # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
+      - name: Cancel if test failed
+        # If the test failed will execute this job otherwise will cancel it
+        if: ${{ needs.first-job.outputs.git_pr_sha == 1' }}
+        uses: andymckay/cancel-action@0.2
+        run: |
+          echo "The build and publish workflow has been canceled due a integration test faliure."
+
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
