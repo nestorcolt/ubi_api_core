@@ -16,9 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      integration_test_result:
-        description: "Set the last process exit value"
-        value: ${{ steps.integration-test.outputs.integration_test_result }}
+      integration_test_result: ${{ steps.integration-test.outputs.integration_test_result }}
 
     steps:
       # —— Tests ✅ ———————————————————————————————————————————————————————————
