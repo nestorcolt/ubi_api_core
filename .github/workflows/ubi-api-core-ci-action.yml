@@ -28,9 +28,7 @@ jobs:
           echo "::set-output name=integration_test_result::${TEST_RESULT}"
 
         outputs:
-          integration_test_result:
-            description: "Set the last process exit value"
-            value: ${{ steps.identify.outputs.integration_test_result }}
+          integration_test_result: ${{ steps.identify.outputs.integration_test_result }}
 
   build-docker:
     # —— Setup Docker Environment 🐋 —————————————————————————————————————————————
