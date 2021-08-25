@@ -33,7 +33,7 @@ jobs:
   build-docker:
     # —— Setup Docker Environment 🐋 —————————————————————————————————————————————
     needs: integration-test
-    if: ${{ needs.integration-test.outputs.git_pr_sha == 1' }}
+    if: ${{ needs.integration-test.outputs.git_pr_sha == 1 }}
     runs-on: ubuntu-latest
 
     steps:
