@@ -26,7 +26,6 @@ jobs:
           sh deploy.sh -t true
           export TEST_RESULT=$?
           echo "::set-output name=integration_test_result::${TEST_RESULT}"
-
       outputs:
         integration_test_result: ${{ steps.identify.outputs.integration_test_result }}
 
