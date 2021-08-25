@@ -43,8 +43,6 @@ jobs:
         # If the test failed will execute this job otherwise will cancel it
         if: ${{ needs.first-job.outputs.git_pr_sha == 1' }}
         uses: andymckay/cancel-action@0.2
-        run: |
-          echo "The build and publish workflow has been canceled due a integration test faliure."
 
       - name: Checkout
         uses: actions/checkout@v2
