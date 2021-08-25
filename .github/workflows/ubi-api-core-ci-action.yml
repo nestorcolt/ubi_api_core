@@ -22,14 +22,15 @@ jobs:
 
       # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
       - name: Run Integration Test
-        run: |
-          sh deploy.sh -t true \
-          export TEST_RESULT=$? \
+        run: >
+          sh deploy.sh -t true
+          export TEST_RESULT=$?
           echo "::set-output name=integration_test_result::${TEST_RESULT}"
-      outputs:
-        integration_test_result:
-          description: "Set the last process exit value"
-          value: ${{ steps.identify.outputs.integration_test_result }}
+
+        outputs:
+          integration_test_result:
+            description: "Set the last process exit value"
+            value: ${{ steps.identify.outputs.integration_test_result }}
 
   build-docker:
     # —— Setup Docker Environment 🐋 —————————————————————————————————————————————
