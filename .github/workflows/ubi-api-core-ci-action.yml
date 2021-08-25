@@ -26,21 +26,22 @@ jobs:
       # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
       - name: Run Integration Test
         run: >
-          sh deploy.sh -t true
+          sh deploy.sh -n
           export TEST_RESULT=$?
           echo "::set-output name=integration_test_result::${TEST_RESULT}"
 
   build-docker:
     # —— Setup Docker Environment 🐋 —————————————————————————————————————————————
     needs: integration-test
+    if: ${{ needs.integration-test.outputs.git_pr_sha == 1' }}
     runs-on: ubuntu-latest
 
     steps:
       # —— Setup GitHub Actions 🐙 —————————————————————————————————————————————
       - name: Cancel if test failed
         # If the test failed will execute this job otherwise will cancel it
-        if: ${{ needs.integration-test.outputs.git_pr_sha == 1' }}
         uses: andymckay/cancel-action@0.2
+
 
 #      - name: Checkout
 #        uses: actions/checkout@v2
