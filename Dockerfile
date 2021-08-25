@@ -24,3 +24,5 @@ COPY --from=builder ${APP_HOME}/build/libs/ROOT-microbundle.jar /app
 
 EXPOSE 8080
 CMD java -jar ROOT-microbundle.jar
+
+# end of dockerfile
